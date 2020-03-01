@@ -1,0 +1,3 @@
+rootProject.name='iosched clone'
+include ':app'
+include ':shared'
