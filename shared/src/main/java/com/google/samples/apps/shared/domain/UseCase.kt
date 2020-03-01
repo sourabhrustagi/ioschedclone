@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.samples.apps.shared.domain.internal.DefaultScheduler
 import com.google.samples.apps.shared.domain.internal.Scheduler
 import com.google.samples.apps.shared.result.Result
+import timber.log.Timber
 import java.lang.Exception
 
 /**
@@ -19,13 +20,17 @@ abstract class UseCase<in P, R> {
         try {
             taskScheduler.execute {
                 try {
-                    execute(parameters).let {useCaseResult ->
+                    execute(parameters).let { useCaseResult ->
                         result.postValue(Result.Success(useCaseResult))
                     }
-                }catch (e: Exception){
-                    Timber.
+                } catch (e: Exception) {
+                    Timber.e(e)
+                    result.postValue(Result.Error(e))
                 }
             }
+        } catch (e: Exception) {
+            Timber.d(e)
+            result.postValue(Result.Error(e))
         }
     }
 

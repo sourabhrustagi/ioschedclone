@@ -15,6 +15,6 @@ class LauncherActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val viewModel: LaunchViewModel = viewModelProvider(viewModelFactory)
-        viewModel.launc
+//        viewModel.launc
     }
 }
