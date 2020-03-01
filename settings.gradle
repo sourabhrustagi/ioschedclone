@@ -1,3 +1,4 @@
 rootProject.name='iosched clone'
 include ':app'
 include ':shared'
+include ':androidtest-shared'

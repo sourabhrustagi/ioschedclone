@@ -69,3 +69,31 @@ internal object AsyncScheduler : Scheduler {
         return Looper.getMainLooper().thread === Thread.currentThread()
     }
 }
+
+object SyncScheduler : Scheduler {
+    private val postDelayedTasks = mutableListOf<() -> Unit>()
+
+    override fun execute(task: () -> Unit) {
+        task()
+    }
+
+    override fun postToMainThread(task: () -> Unit) {
+        task()
+    }
+
+    override fun postDelayedToMainThread(delay: Long, task: () -> Unit) {
+        postDelayedTasks.add(task)
+    }
+
+    fun clearScheduledPostdelayedTasks() {
+        postDelayedTasks.clear()
+    }
+
+    fun runAllSchedulerPostDelayedTasks() {
+        val tasks = postDelayedTasks.toList()
+        clearScheduledPostdelayedTasks()
+        for (task in tasks) {
+            task()
+        }
+    }
+}
